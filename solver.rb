@@ -2,6 +2,7 @@ require_relative 'puzzle'
 require 'pry'
 
 def copy_board(b)
+  puts "copying the board"
   newb = Array.new
   b.each do |row|
     r = []
