@@ -1,12 +1,14 @@
 # Robert Ip
+
 class State
   @@goal_state = [[1,2,3],[4,5,6],[7,44,10]]
   @@history = []
   @@board = []
 
-  def initialize (board)
+  def initialize (board,history)
     # instance variables
     @@board = board
+    @@history = history
   end
 
   def isSolved
@@ -28,6 +30,10 @@ class State
 
   def get_board
     @@board
+  end
+
+  def get_history
+    @@history
   end
 
   def index_zero
@@ -69,7 +75,7 @@ class State
 
   ## swaps the blank tile with the tile to its right
   def moveRight(x,y)
-   if y != 0
+   if y != 2
      puts "moving the zero right"
      @@history << "right"
      @@board[x][y],@@board[x][y+1] = @@board[x][y+1],@@board[x][y]
