@@ -2,13 +2,13 @@ require_relative 'puzzle'
 require 'pry'
 
 def copy_board(b)
-  puts "copying the board"
   newb = Array.new
   b.each do |row|
-    r = []
+    r = Array.new
     r << row[0] << row[1] << row[2]
     newb << r
   end
+  # binding.pry
   newb
 end
 
@@ -20,7 +20,7 @@ def copy_history(h)
   newh
 end
 
-p = State.new([[10,1,3],[4,2,5],[7,44,6]],[])
+p = State.new([[4,1,2],[5,44,3],[7,10,6]],[])
 q = Queue.new
 q << p
 t =  p.get_board
@@ -33,7 +33,7 @@ while (!q.empty?)
   if bo.isSolved
     break
   end
-  binding.pry
+
   bo.display_board
   x_coord = bo.index_zero.first
   y_coord = bo.index_zero[1]
@@ -41,17 +41,22 @@ while (!q.empty?)
 
   # move left if possible
   if y_coord != 0 && bo.get_history.last != "right"
-    binding.pry
-    state_copy = State.new(copy_board(bo.get_board), copy_history(bo.get_history))
+    # binding.pry
+    copyb = copy_board(bo.get_board)
+    copyh = copy_history(bo.get_history)
+    state_copy = State.new(copyb, copyh)
     state_copy.moveLeft(x_coord,y_coord)
+    # binding.pry
     q.push(state_copy)
     num_Nodes += 1
   end
 
   # move right if possible
   if y_coord != 2 && bo.get_history.last != "left"
-    binding.pry
-    state_copy = State.new(copy_board(bo.get_board), copy_history(bo.get_history))
+    # binding.pry
+    copyb = copy_board(bo.get_board)
+    copyh = copy_history(bo.get_history)
+    state_copy = State.new(copyb, copyh)
     state_copy.moveRight(x_coord,y_coord)
     q.push(state_copy)
     num_Nodes += 1
@@ -59,8 +64,10 @@ while (!q.empty?)
 
   # move up if possible
   if x_coord != 0 && bo.get_history.last != "down"
-    binding.pry
-    state_copy = State.new(copy_board(bo.get_board), copy_history(bo.get_history))
+    # binding.pry
+    copyb = copy_board(bo.get_board)
+    copyh = copy_history(bo.get_history)
+    state_copy = State.new(copyb, copyh)
     state_copy.moveUp(x_coord,y_coord)
     q.push(state_copy)
     num_Nodes += 1
@@ -68,8 +75,10 @@ while (!q.empty?)
 
   # move down if possible
   if x_coord != 2 && bo.get_history.last != "up"
-    binding.pry
-    state_copy = State.new(copy_board(bo.get_board), copy_history(bo.get_history))
+    # binding.pry
+    copyb = copy_board(bo.get_board)
+    copyh = copy_history(bo.get_history)
+    state_copy = State.new(copyb, copyh)
     state_copy.moveDown(x_coord,y_coord)
     q.push(state_copy)
     num_Nodes += 1
