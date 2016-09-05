@@ -21,7 +21,7 @@ def copy_history(h)
 end
 
 num_Nodes = 0
-p = State.new([[2,3,10],[1,6,8],[4,5,7]],[])
+p = State.new([[1,2,3],[4,10,5],[7,8,6]],[])
 q = Queue.new
 
 
