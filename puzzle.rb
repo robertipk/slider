@@ -1,7 +1,7 @@
 # Robert Ip
 
 class State
-  @goal_state = [[1,2,3],[4,5,6],[7,44,10]]
+  @goal_state = []
   @history = []
   @board = []
 
@@ -9,7 +9,7 @@ class State
     # instance variables
     @board = board
     @history = history
-    @goal_state = [[1,2,3],[4,5,6],[7,44,10]]
+    @goal_state = [[1,2,3],[4,10,6],[5,7,8]]
   end
 
   def isSolved

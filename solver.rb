@@ -21,7 +21,7 @@ def copy_history(h)
 end
 
 num_Nodes = 0
-p = State.new([[4,1,2],[5,44,3],[7,10,6]],[])
+p = State.new([[10,1,3],[4,2,6],[5,7,8]],[])
 q = Queue.new
 
 
@@ -30,9 +30,11 @@ q = Queue.new
  stack = Array.new
  stack << p
  while !stack.empty?
-   binding.pry
+   puts "Number of keys in the hash " << visited_states.length.to_s
+  #  binding.pry
    bo = stack.pop
    if bo.isSolved
+     binding.pry
      puts " solved dddddddddd"
      bo.display_history
      break
@@ -45,7 +47,7 @@ q = Queue.new
    # add adjacent nodes to the stack IFF these nodes have not yet been visited
    # each time a node is added to the stack, increment visited_nodes
 
-   # move left if possible
+   # move left if possible and resulting state has not been visited yet
    if y_coord != 0 && bo.get_history.last != "right"
      # binding.pry
      copyb = copy_board(bo.get_board)
@@ -54,12 +56,11 @@ q = Queue.new
      state_copy.moveLeft(x_coord,y_coord)
      if !visited_states.has_key?(state_copy.get_board)
        stack << state_copy
-      num_Nodes += 1
+       num_Nodes += 1
      end
-     # binding.pry
    end
 
-   # move right if possible
+  # move right if possible and resulting state has not been visited yet
    if y_coord != 2 && bo.get_history.last != "left"
      # binding.pry
      copyb = copy_board(bo.get_board)
@@ -68,26 +69,23 @@ q = Queue.new
      state_copy.moveRight(x_coord,y_coord)
      if !visited_states.has_key?(state_copy.get_board)
        stack << state_copy
-      num_Nodes += 1
+       num_Nodes += 1
      end
-     # binding.pry
    end
 
-   # move up if possible
+   # move up if possible and resulting state has not been visited yet
    if x_coord != 0 && bo.get_history.last != "down"
-     # binding.pry
      copyb = copy_board(bo.get_board)
      copyh = copy_history(bo.get_history)
      state_copy = State.new(copyb, copyh)
-     state_copy.moveDown(x_coord,y_coord)
+     state_copy.moveUp(x_coord,y_coord)
      if !visited_states.has_key?(state_copy.get_board)
        stack << state_copy
-      num_Nodes += 1
+       num_Nodes += 1
      end
-     # binding.pry
    end
 
-   # move down if possible
+   # move down if possible and resulting state has not been visited yet
    if x_coord != 2 && bo.get_history.last != "up"
      # binding.pry
      copyb = copy_board(bo.get_board)
@@ -96,7 +94,7 @@ q = Queue.new
      state_copy.moveDown(x_coord,y_coord)
      if !visited_states.has_key?(state_copy.get_board)
        stack << state_copy
-      num_Nodes += 1
+       num_Nodes += 1
      end
      # binding.pry
    end
