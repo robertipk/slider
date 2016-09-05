@@ -21,7 +21,7 @@ def copy_history(h)
 end
 
 num_Nodes = 0
-p = State.new([[10,1,3],[4,2,6],[5,7,8]],[])
+p = State.new([[2,3,10],[1,6,8],[4,5,7]],[])
 q = Queue.new
 
 
@@ -35,14 +35,13 @@ q = Queue.new
    bo = stack.pop
    if bo.isSolved
      binding.pry
-     puts " solved dddddddddd"
      bo.display_history
      break
    end
+   visited_states[bo.get_board] = true
    x_coord = bo.index_zero.first
    y_coord = bo.index_zero[1]
    # mark this state as already visited
-   visited_states[bo.get_board] = true
 
    # add adjacent nodes to the stack IFF these nodes have not yet been visited
    # each time a node is added to the stack, increment visited_nodes
@@ -54,7 +53,9 @@ q = Queue.new
      copyh = copy_history(bo.get_history)
      state_copy = State.new(copyb, copyh)
      state_copy.moveLeft(x_coord,y_coord)
-     if !visited_states.has_key?(state_copy.get_board)
+     key = state_copy.get_board
+     if !visited_states.has_key?(key)
+       visited_states[:key] = true
        stack << state_copy
        num_Nodes += 1
      end
@@ -67,7 +68,9 @@ q = Queue.new
      copyh = copy_history(bo.get_history)
      state_copy = State.new(copyb, copyh)
      state_copy.moveRight(x_coord,y_coord)
-     if !visited_states.has_key?(state_copy.get_board)
+     key = state_copy.get_board
+     if !visited_states.has_key?(key)
+       visited_states[:key] = true
        stack << state_copy
        num_Nodes += 1
      end
@@ -79,7 +82,9 @@ q = Queue.new
      copyh = copy_history(bo.get_history)
      state_copy = State.new(copyb, copyh)
      state_copy.moveUp(x_coord,y_coord)
-     if !visited_states.has_key?(state_copy.get_board)
+     key = state_copy.get_board
+     if !visited_states.has_key?(key)
+       visited_states[:key] = true
        stack << state_copy
        num_Nodes += 1
      end
@@ -92,7 +97,9 @@ q = Queue.new
      copyh = copy_history(bo.get_history)
      state_copy = State.new(copyb, copyh)
      state_copy.moveDown(x_coord,y_coord)
-     if !visited_states.has_key?(state_copy.get_board)
+     key = state_copy.get_board
+     if !visited_states.has_key?(key)
+       visited_states[:key] = true
        stack << state_copy
        num_Nodes += 1
      end
