@@ -20,82 +20,146 @@ def copy_history(h)
   newh
 end
 
+num_Nodes = 0
 p = State.new([[4,1,2],[5,44,3],[7,10,6]],[])
 q = Queue.new
-q << p
-t =  p.get_board
-num_Nodes = 0
-# puts t[0][0].to_s
-# puts "is the game solved? " << p.isSolved.to_s
-while (!q.empty?)
-  puts "length of q is " << q.length.to_s
-  bo = q.pop
-  if bo.isSolved
-    break
-  end
 
-  bo.display_board
-  x_coord = bo.index_zero.first
-  y_coord = bo.index_zero[1]
-  # each state added to the queue represents the expansion of another node
 
-  # move left if possible
-  if y_coord != 0 && bo.get_history.last != "right"
-    # binding.pry
-    copyb = copy_board(bo.get_board)
-    copyh = copy_history(bo.get_history)
-    state_copy = State.new(copyb, copyh)
-    state_copy.moveLeft(x_coord,y_coord)
-    # binding.pry
-    q.push(state_copy)
-    num_Nodes += 1
-  end
+ ## DEPTH FIRST SEARCH
+ visited_states = Hash.new
+ stack = Array.new
+ stack << p
+ while !stack.empty?
+   binding.pry
+   bo = stack.pop
+   if bo.isSolved
+     puts " solved dddddddddd"
+     bo.display_history
+     break
+   end
+   x_coord = bo.index_zero.first
+   y_coord = bo.index_zero[1]
+   # mark this state as already visited
+   visited_states[bo.get_board] = true
 
-  # move right if possible
-  if y_coord != 2 && bo.get_history.last != "left"
-    # binding.pry
-    copyb = copy_board(bo.get_board)
-    copyh = copy_history(bo.get_history)
-    state_copy = State.new(copyb, copyh)
-    state_copy.moveRight(x_coord,y_coord)
-    q.push(state_copy)
-    num_Nodes += 1
-  end
+   # add adjacent nodes to the stack IFF these nodes have not yet been visited
+   # each time a node is added to the stack, increment visited_nodes
 
-  # move up if possible
-  if x_coord != 0 && bo.get_history.last != "down"
-    # binding.pry
-    copyb = copy_board(bo.get_board)
-    copyh = copy_history(bo.get_history)
-    state_copy = State.new(copyb, copyh)
-    state_copy.moveUp(x_coord,y_coord)
-    q.push(state_copy)
-    num_Nodes += 1
-  end
+   # move left if possible
+   if y_coord != 0 && bo.get_history.last != "right"
+     # binding.pry
+     copyb = copy_board(bo.get_board)
+     copyh = copy_history(bo.get_history)
+     state_copy = State.new(copyb, copyh)
+     state_copy.moveLeft(x_coord,y_coord)
+     if !visited_states.has_key?(state_copy.get_board)
+       stack << state_copy
+      num_Nodes += 1
+     end
+     # binding.pry
+   end
 
-  # move down if possible
-  if x_coord != 2 && bo.get_history.last != "up"
-    # binding.pry
-    copyb = copy_board(bo.get_board)
-    copyh = copy_history(bo.get_history)
-    state_copy = State.new(copyb, copyh)
-    state_copy.moveDown(x_coord,y_coord)
-    q.push(state_copy)
-    num_Nodes += 1
-  end
+   # move right if possible
+   if y_coord != 2 && bo.get_history.last != "left"
+     # binding.pry
+     copyb = copy_board(bo.get_board)
+     copyh = copy_history(bo.get_history)
+     state_copy = State.new(copyb, copyh)
+     state_copy.moveRight(x_coord,y_coord)
+     if !visited_states.has_key?(state_copy.get_board)
+       stack << state_copy
+      num_Nodes += 1
+     end
+     # binding.pry
+   end
+
+   # move up if possible
+   if x_coord != 0 && bo.get_history.last != "down"
+     # binding.pry
+     copyb = copy_board(bo.get_board)
+     copyh = copy_history(bo.get_history)
+     state_copy = State.new(copyb, copyh)
+     state_copy.moveDown(x_coord,y_coord)
+     if !visited_states.has_key?(state_copy.get_board)
+       stack << state_copy
+      num_Nodes += 1
+     end
+     # binding.pry
+   end
+
+   # move down if possible
+   if x_coord != 2 && bo.get_history.last != "up"
+     # binding.pry
+     copyb = copy_board(bo.get_board)
+     copyh = copy_history(bo.get_history)
+     state_copy = State.new(copyb, copyh)
+     state_copy.moveDown(x_coord,y_coord)
+     if !visited_states.has_key?(state_copy.get_board)
+       stack << state_copy
+      num_Nodes += 1
+     end
+     # binding.pry
+   end
 end
-puts "Puzzle was solved in " << num_Nodes.to_s << " nodes."
 
 
-# puts "the index of zero is "
-# p indexes
-# p.display_board
-# # puts p.index_zero[0]
-# p.moveUp(p.index_zero[0], p.index_zero[1])
-# p.moveLeft(p.index_zero[0], p.index_zero[1])
-# p.moveUp(p.index_zero[0], p.index_zero[1])
-# p.moveLeft(p.index_zero[0], p.index_zero[1])
-# p.display_board
-# p.display_history
-# p.count_moves
-## breath first search
+#  ## BREADTH FIRST SEARCH
+# q << p
+# t =  p.get_board
+# # puts t[0][0].to_s
+# # puts "is the game solved? " << p.isSolved.to_s
+# while (!q.empty?)
+#   puts "length of q is " << q.length.to_s
+#   bo = q.pop
+#   if bo.isSolved
+#     bo.display_history
+#     break
+#   end
+#
+#   bo.display_board
+#   x_coord = bo.index_zero.first
+#   y_coord = bo.index_zero[1]
+#   # each state added to the queue represents the expansion of another node
+#
+#   # move left if possible
+#   if y_coord != 0 && bo.get_history.last != "right"
+#     copyb = copy_board(bo.get_board)
+#     copyh = copy_history(bo.get_history)
+#     state_copy = State.new(copyb, copyh)
+#     state_copy.moveLeft(x_coord,y_coord)
+#     q.push(state_copy)
+#     num_Nodes += 1
+#   end
+#
+#   # move right if possible
+#   if y_coord != 2 && bo.get_history.last != "left"
+#     # binding.pry
+#     copyb = copy_board(bo.get_board)
+#     copyh = copy_history(bo.get_history)
+#     state_copy = State.new(copyb, copyh)
+#     state_copy.moveRight(x_coord,y_coord)
+#     q.push(state_copy)
+#     num_Nodes += 1
+#   end
+#
+#   # move up if possible
+#   if x_coord != 0 && bo.get_history.last != "down"
+#     copyb = copy_board(bo.get_board)
+#     copyh = copy_history(bo.get_history)
+#     state_copy = State.new(copyb, copyh)
+#     state_copy.moveUp(x_coord,y_coord)
+#     q.push(state_copy)
+#     num_Nodes += 1
+#   end
+#
+#   # move down if possible
+#   if x_coord != 2 && bo.get_history.last != "up"
+#     copyb = copy_board(bo.get_board)
+#     copyh = copy_history(bo.get_history)
+#     state_copy = State.new(copyb, copyh)
+#     state_copy.moveDown(x_coord,y_coord)
+#     q.push(state_copy)
+#     num_Nodes += 1
+#   end
+# end
+# puts "Puzzle was solved in " << num_Nodes.to_s << " nodes."
