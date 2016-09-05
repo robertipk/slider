@@ -6,17 +6,18 @@ class State
   @board = []
 
   # hardcoding x and y values for calculating manhattan distance
-  1x = 1y = 2x = 3x = 4y = 7y = 0
-  2y = 4x = 5x = 5y = 6x = 8y = 1
-  3y = 6y = 7x = 8x = 10x = 10y = 2
-
-
+  @onex = @oney = @twox = @threex = @foury = @seveny = 0
+  @twoy = @fourx = @fivex = @fivey = @sixx = @eighty = 1
+  @threey = @sixy = @sevenx = @eightx = @tenx = @teny = 2
 
   def initialize (board,history)
     # instance variables
     @board = board
     @history = history
     @goal_state = [[1,2,3],[4,5,6],[7,8,10]]
+    @onex = @oney = @twox = @threex = @foury = @seveny = 0
+    @twoy = @fourx = @fivex = @fivey = @sixx = @eighty = 1
+    @threey = @sixy = @sevenx = @eightx = @tenx = @teny = 2
   end
 
   def isSolved
@@ -47,6 +48,7 @@ class State
     @history
   end
 
+  # returns the location of the blank tile
   def index_zero
     for x in 0...3
       for y in 0...3
@@ -98,7 +100,8 @@ class State
   def get_heuristic
     manhattan_dist_sum  = 0
     manhattan_dist_sum += get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3)
-
+    manhattan_dist_sum += get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6)
+    manhattan_dist_sum += get_manhattan_distance(7) + get_manhattan_distance(8)
     manhattan_dist_sum
   end
 
@@ -116,25 +119,31 @@ class State
   def get_manhattan_distance(num)
     case num
     when 1
-
-      return
+      coords = find_index(1)
+      binding.pry
+      return (coords[0]-@onex).abs + (coords[1]-@oney).abs
     when 2
+      coords = find_index(2)
+      return (coords[0]-@twox).abs + (coords[1]-@twoy).abs
     when 3
+      coords = find_index(3)
+      return (coords[0]-@threex).abs + (coords[1]-@threey).abs
     when 4
+      coords = find_index(4)
+      return (coords[0]-@fourx).abs + (coords[1]-@foury).abs
     when 5
+      coords = find_index(5)
+      return (coords[0]-@fivex).abs + (coords[1]-@fivey).abs
     when 6
+      coords = find_index(6)
+      return (coords[0]-@sixx).abs + (coords[1]-@sixy).abs
     when 7
+      coords = find_index(7)
+      return (coords[0]-@sevenx).abs + (coords[1]-@seveny).abs
     when 8
-    when 9
-    when 10
+      coords = find_index(8)
+      return (coords[0]-@eightx).abs + (coords[1]-@eighty).abs
     end
-    # 1x = 1y = 2x = 3x = 4y = 7y = 0
-    # 2y = 4x = 5x = 5y = 6x = 8y = 1
-    # 3y = 6y = 7x = 8x = 10x = 10y = 2
-    manhattan_dist  = 0
-
-    manhattan_dist
   end
-
 
 end

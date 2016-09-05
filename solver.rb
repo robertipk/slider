@@ -24,6 +24,11 @@ num_Nodes = 0
 p = State.new([[1,2,3],[4,10,5],[7,8,6]],[])
 q = Queue.new
 
+###########################################################################################################################
+## A* SEARCH
+
+
+###########################################################################################################################
 
  ## DEPTH FIRST SEARCH
  visited_states = Hash.new
@@ -33,6 +38,8 @@ q = Queue.new
    puts "Number of keys in the hash " << visited_states.length.to_s
   #  binding.pry
    bo = stack.pop
+   puts "the distance is " << bo.get_manhattan_distance(1).to_s
+   binding.pry
    if bo.isSolved
      binding.pry
      bo.display_history
@@ -107,7 +114,7 @@ q = Queue.new
    end
 end
 
-
+###########################################################################################################################
 #  ## BREADTH FIRST SEARCH
 # q << p
 # t =  p.get_board
