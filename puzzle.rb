@@ -95,16 +95,6 @@ class State
    end
   end
 
-  # calculates te heuristic using the sum of the Manhattan Distance of each tile
-  # from where it currently is in the state to where it should be in the goal state
-  def get_heuristic
-    manhattan_dist_sum  = 0
-    manhattan_dist_sum += get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3)
-    manhattan_dist_sum += get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6)
-    manhattan_dist_sum += get_manhattan_distance(7) + get_manhattan_distance(8)
-    manhattan_dist_sum
-  end
-
   # finds x and y coordinates of an element in the 2D board
   def find_index(num)
     for x in 0...3
@@ -144,6 +134,28 @@ class State
       coords = find_index(8)
       return (coords[0]-@eightx).abs + (coords[1]-@eighty).abs
     end
+  end
+
+  # returns the g(n) part of the cost function, which is the amount of steps
+  # that the curreet state it at
+  def get_g
+    @history.length
+  end
+
+  # returns the h(n) part of the cost function
+  # uses the Manhattan distance to approximate the number of moves needed to solve the puzzle
+  def get_h
+    manhattan_dist_sum  = 0
+    manhattan_dist_sum += get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3)
+    manhattan_dist_sum += get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6)
+    manhattan_dist_sum += get_manhattan_distance(7) + get_manhattan_distance(8)
+    manhattan_dist_sum
+  end
+
+  # the f(n) or total cost of the current state
+  # calculated by retrieving g+h
+  def get_f
+    get_g + get_f
   end
 
 end
