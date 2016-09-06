@@ -1,5 +1,4 @@
-# Robert Ip
-
+# Robert Ip, CISC 3410, Program #1
 class State
   @goal_state = []
   @history = []
@@ -110,7 +109,6 @@ class State
     case num
     when 1
       coords = find_index(1)
-      binding.pry
       return (coords[0]-@onex).abs + (coords[1]-@oney).abs
     when 2
       coords = find_index(2)

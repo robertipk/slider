@@ -1,4 +1,4 @@
-# Robert Ip
+# Robert Ip, CISC 3410, Program #1
 # I copied this implementation of a priority queue from
 # http://www.brianstorti.com/implementing-a-priority-queue-in-ruby/
 
@@ -9,6 +9,13 @@ class PriorityQueue
 
   def getElements
     @elements
+  end
+
+  def empty?
+    if @elements.length == 1
+      return true
+    end
+    false
   end
 
   def <<(element)
@@ -24,7 +31,7 @@ class PriorityQueue
     return if index <= 1
 
     # or if the parent is already greater than the child
-    return if @elements[parent_index] >= @elements[index]
+    return if @elements[parent_index].get_f <= @elements[index].get_f
 
     # otherwise we exchange the child with the parent
     exchange(index, parent_index)
@@ -59,11 +66,11 @@ class PriorityQueue
     not_the_last_element = child_index < @elements.size - 1
     left_element = @elements[child_index]
     right_element = @elements[child_index + 1]
-    child_index += 1 if not_the_last_element && right_element > left_element
+    child_index += 1 if not_the_last_element && right_element.get_f < left_element.get_f
 
     # there is no need to continue if the parent element is already bigger
     # then its children
-    return if @elements[index] >= @elements[child_index]
+    return if @elements[index].get_f <= @elements[child_index].get_f
 
     exchange(index, child_index)
 
