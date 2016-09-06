@@ -1,6 +1,6 @@
 # Robert Ip, CISC 3410, Program #1
-# I copied this implementation of a priority queue from
-# http://www.brianstorti.com/implementing-a-priority-queue-in-ruby/
+# https://github.com/robertipk/slider/
+
 require_relative 'puzzle'
 
 class PriorityQueue

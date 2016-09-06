@@ -1,4 +1,5 @@
 # Robert Ip, CISC 3410, Program #1
+# https://github.com/robertipk/slider/
 class State
   def initialize (board,history)
     # instance variables
@@ -52,7 +53,6 @@ class State
   ## swaps the blank tile with the tile above it
   def moveDown(x,y)
    if x != 2
-    puts "moving the zero down"
     @history << "down"
     @board[x][y],@board[x+1][y] = @board[x+1][y],@board[x][y]
    end
@@ -61,7 +61,6 @@ class State
   ## swaps the blank tile with the tile below it
   def moveUp(x,y)
    if x > 0
-    puts "moving the zero up"
     @history << "up"
     @board[x][y],@board[x-1][y] = @board[x-1][y],@board[x][y]
    end
@@ -70,7 +69,6 @@ class State
   ## swaps the blank tile with the tile to its left
   def moveLeft(x,y)
    if y != 0
-     puts "moving the zero left"
      @history << "left"
      @board[x][y],@board[x][y-1] = @board[x][y-1],@board[x][y]
    end
@@ -79,7 +77,6 @@ class State
   ## swaps the blank tile with the tile to its right
   def moveRight(x,y)
    if y != 2
-     puts "moving the zero right"
      @history << "right"
      @board[x][y],@board[x][y+1] = @board[x][y+1],@board[x][y]
    end

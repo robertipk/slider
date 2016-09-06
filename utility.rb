@@ -1,4 +1,5 @@
 # Robert Ip, CISC 3410, Program #1
+# https://github.com/robertipk/slider/
 
 def copy_board(b)
   newb = Array.new
