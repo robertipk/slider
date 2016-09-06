@@ -1,6 +1,7 @@
 # Robert Ip, CISC 3410, Program #1
 # https://github.com/robertipk/slider/
 
+#copy_board and copy_history make deep copies
 def copy_board(b)
   newb = Array.new
   b.each do |row|

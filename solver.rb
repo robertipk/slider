@@ -5,29 +5,26 @@ require_relative 'priorityq'
 require_relative 'utility'
 require 'pry'
 
-
-
-## A* SEARCH ######################################
-
 def astar_search(new_game)
   puts "Executing A* search"
   num_Nodes_Expanded = 0
-  pq = PriorityQueue.new
-  pq << new_game
-  while !pq.empty?
-    board = pq.pop
+  fringe = PriorityQueue.new
+  fringe << new_game
+  while !fringe.empty?
+    board = fringe.pop
     if board.isSolved
       break
     end
     x_coord = board.index_zero.first
     y_coord = board.index_zero[1]
+
     # move left if possible and resulting state has not been visited yet
     if y_coord != 0 && board.get_history.last != "right"
       copyb = copy_board(board.get_board)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveLeft(x_coord,y_coord)
-      pq << state_copy
+      fringe << state_copy
       num_Nodes_Expanded += 1
     end
 
@@ -37,7 +34,7 @@ def astar_search(new_game)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveRight(x_coord,y_coord)
-      pq << state_copy
+      fringe << state_copy
       num_Nodes_Expanded += 1
     end
 
@@ -47,7 +44,7 @@ def astar_search(new_game)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveUp(x_coord,y_coord)
-      pq << state_copy
+      fringe << state_copy
       num_Nodes_Expanded += 1
     end
 
@@ -58,13 +55,12 @@ def astar_search(new_game)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveDown(x_coord,y_coord)
-      pq << state_copy
+      fringe << state_copy
       num_Nodes_Expanded += 1
     end
   end
 end
 
- ## DEPTH FIRST SEARCH #################################################
 def dfs(new_game)
   puts "Executing depth first search"
   num_Nodes_Expanded = 0
@@ -72,22 +68,21 @@ def dfs(new_game)
    stack = Array.new
    stack << new_game
    while !stack.empty?
-    #  binding.pry
      bo = stack.pop
      if bo.isSolved
        break
      end
+     # mark this permutation of the board as already visited
      visited_states[bo.get_board] = true
+
      x_coord = bo.index_zero.first
      y_coord = bo.index_zero[1]
-     # mark this state as already visited
 
      # add adjacent nodes to the stack IFF these nodes have not yet been visited
      # each time a node is added to the stack, increment visited_nodes
 
      # move left if possible and resulting state has not been visited yet
      if y_coord != 0 && bo.get_history.last != "right"
-       # binding.pry
        copyb = copy_board(bo.get_board)
        copyh = copy_history(bo.get_history)
        state_copy = State.new(copyb, copyh)
@@ -102,7 +97,6 @@ def dfs(new_game)
 
     # move right if possible and resulting state has not been visited yet
      if y_coord != 2 && bo.get_history.last != "left"
-       # binding.pry
        copyb = copy_board(bo.get_board)
        copyh = copy_history(bo.get_history)
        state_copy = State.new(copyb, copyh)
@@ -145,15 +139,11 @@ def dfs(new_game)
   end
 end
 
-
-###########################################################################################################################
-#  ## BREADTH FIRST SEARCH
 def bfs(new_game)
   puts "Executing breadth first search"
   num_Nodes_Expanded = 0
   q = Queue.new
   q << new_game
-  t =  new_game.get_board
   while (!q.empty?)
     bo = q.pop
     if bo.isSolved

@@ -1,5 +1,6 @@
 # Robert Ip, CISC 3410, Program #1
 # https://github.com/robertipk/slider/
+# source: http://www.brianstorti.com/implementing-a-priority-queue-in-ruby/
 
 require_relative 'puzzle'
 
