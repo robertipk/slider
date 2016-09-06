@@ -23,7 +23,7 @@ def copy_history(h)
 end
 
 num_Nodes_Expanded = 0
-new_game = State.new([[1,2,3],[4,10,5],[7,8,6]],[])
+new_game = State.new([[1,2,5],[3,4,0],[6,7,8]],[])
 # p = State.new([[4,10,5],[7,8,6],[1,2,3]],[])
 
 
@@ -31,49 +31,54 @@ new_game = State.new([[1,2,3],[4,10,5],[7,8,6]],[])
 ## A* SEARCH
 pq = PriorityQueue.new
 pq << new_game
-while !pq.empty
+while !pq.empty?
+  binding.pry
   board = pq.pop
+  if board.isSolved
+    break
+  end
+  x_coord = board.index_zero.first
+  y_coord = board.index_zero[1]
   # move left if possible and resulting state has not been visited yet
-  if y_coord != 0 && bo.get_history.last != "right"
+  if y_coord != 0 && board.get_history.last != "right"
     # binding.pry
     copyb = copy_board(board.get_board)
     copyh = copy_history(board.get_history)
     state_copy = State.new(copyb, copyh)
     state_copy.moveLeft(x_coord,y_coord)
-    stack << state_copy
+    pq << state_copy
     num_Nodes_Expanded += 1
-    end
   end
 
  # move right if possible and resulting state has not been visited yet
-  if y_coord != 2 && bo.get_history.last != "left"
+  if y_coord != 2 && board.get_history.last != "left"
     # binding.pry
     copyb = copy_board(board.get_board)
     copyh = copy_history(board.get_history)
     state_copy = State.new(copyb, copyh)
     state_copy.moveRight(x_coord,y_coord)
-    stack << state_copy
+    pq << state_copy
     num_Nodes_Expanded += 1
   end
 
   # move up if possible and resulting state has not been visited yet
-  if x_coord != 0 && bo.get_history.last != "down"
+  if x_coord != 0 && board.get_history.last != "down"
     copyb = copy_board(board.get_board)
     copyh = copy_history(board.get_history)
     state_copy = State.new(copyb, copyh)
     state_copy.moveUp(x_coord,y_coord)
-    stack << state_copy
+    pq << state_copy
     num_Nodes_Expanded += 1
   end
 
   # move down if possible and resulting state has not been visited yet
-  if x_coord != 2 && bo.get_history.last != "up"
+  if x_coord != 2 && board.get_history.last != "up"
     # binding.pry
     copyb = copy_board(board.get_board)
     copyh = copy_history(board.get_history)
     state_copy = State.new(copyb, copyh)
     state_copy.moveDown(x_coord,y_coord)
-    stack << state_copy
+    pq << state_copy
     num_Nodes_Expanded += 1
   end
 end

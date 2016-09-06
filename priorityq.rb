@@ -1,6 +1,7 @@
 # Robert Ip, CISC 3410, Program #1
 # I copied this implementation of a priority queue from
 # http://www.brianstorti.com/implementing-a-priority-queue-in-ruby/
+require_relative 'puzzle'
 
 class PriorityQueue
   def initialize
@@ -79,20 +80,3 @@ class PriorityQueue
     bubble_down(child_index)
   end
 end
-
-q = PriorityQueue.new
-q << 2
-q << 3
-q << 1
-q << 4
-q << 121
-q << 34
-q << 56
-
-p q.pop
-p q.pop
-p q.pop
-p q.pop
-p q.pop
-p q.pop
-p q.pop

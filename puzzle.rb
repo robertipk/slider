@@ -13,10 +13,10 @@ class State
     # instance variables
     @board = board
     @history = history
-    @goal_state = [[1,2,3],[4,5,6],[7,8,10]]
-    @onex = @oney = @twox = @threex = @foury = @seveny = 0
-    @twoy = @fourx = @fivex = @fivey = @sixx = @eighty = 1
-    @threey = @sixy = @sevenx = @eightx = @tenx = @teny = 2
+    @goal_state = [[0,1,2],[3,4,5],[6,7,8]]
+    @onex = @twox = @threey = @sixy = 0
+    @oney = @threex = @fourx = @foury = @fivex = @seveny = 1
+    @twoy = @fivey = @sevenx = @eightx = @sixx = @eighty = 2
   end
 
   def isSolved
@@ -51,7 +51,7 @@ class State
   def index_zero
     for x in 0...3
       for y in 0...3
-        if @board[x][y] == 10
+        if @board[x][y] == 0
           return [x,y]
         end
       end
@@ -153,7 +153,7 @@ class State
   # the f(n) or total cost of the current state
   # calculated by retrieving g+h
   def get_f
-    get_g + get_f
+    get_g + get_h
   end
 
 end
