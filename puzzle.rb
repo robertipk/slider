@@ -1,14 +1,5 @@
 # Robert Ip, CISC 3410, Program #1
 class State
-  @goal_state = []
-  @history = []
-  @board = []
-
-  # hardcoding x and y values for calculating manhattan distance
-  @onex = @oney = @twox = @threex = @foury = @seveny = 0
-  @twoy = @fourx = @fivex = @fivey = @sixx = @eighty = 1
-  @threey = @sixy = @sevenx = @eightx = @tenx = @teny = 2
-
   def initialize (board,history)
     # instance variables
     @board = board
@@ -21,7 +12,7 @@ class State
 
   def isSolved
     if @board == @goal_state
-      puts "IT HAS BEEN SOLVED ++++++++++++++++++++++++++++++++++++++++"
+      puts "Solved in " << count_moves.to_s << " moves"
     end
     @board == @goal_state
   end
@@ -104,6 +95,7 @@ class State
       end
     end
   end
+
   # the Manhattan distance is the sum of the absolute values of the horizontal and the vertical distance
   def get_manhattan_distance(num)
     case num
@@ -143,11 +135,9 @@ class State
   # returns the h(n) part of the cost function
   # uses the Manhattan distance to approximate the number of moves needed to solve the puzzle
   def get_h
-    manhattan_dist_sum  = 0
-    manhattan_dist_sum += get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3)
-    manhattan_dist_sum += get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6)
-    manhattan_dist_sum += get_manhattan_distance(7) + get_manhattan_distance(8)
-    manhattan_dist_sum
+    get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3) +
+    get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6) +
+    get_manhattan_distance(7) + get_manhattan_distance(8)
   end
 
   # the f(n) or total cost of the current state
@@ -155,5 +145,4 @@ class State
   def get_f
     get_g + get_h
   end
-
 end

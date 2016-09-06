@@ -1,38 +1,16 @@
 # Robert Ip, CISC 3410, Program #1
 require_relative 'puzzle'
 require_relative 'priorityq'
+require_relative 'utility'
 require 'pry'
-
-def copy_board(b)
-  newb = Array.new
-  b.each do |row|
-    r = Array.new
-    r << row[0] << row[1] << row[2]
-    newb << r
-  end
-  # binding.pry
-  newb
-end
-
-def copy_history(h)
-  newh = Array.new
-  h.each do |movement|
-    newh << movement
-  end
-  newh
-end
 
 num_Nodes_Expanded = 0
 new_game = State.new([[1,2,5],[3,4,0],[6,7,8]],[])
-# p = State.new([[4,10,5],[7,8,6],[1,2,3]],[])
 
-
-###########################################################################################################################
-## A* SEARCH
+## A* SEARCH ######################################
 pq = PriorityQueue.new
 pq << new_game
 while !pq.empty?
-  binding.pry
   board = pq.pop
   if board.isSolved
     break
@@ -82,12 +60,9 @@ while !pq.empty?
     num_Nodes_Expanded += 1
   end
 end
-# look for the vertex n that has the lowest f(n) = g(n) + h(n)
-# g(n) represents the exact cost of the path from the starting point to any vertex n
-# h(n) represents the heuristic estimated cost from vertex n to the goal (the sum of the manhattan distance for all tiles)
-###########################################################################################################################
 
- ## DEPTH FIRST SEARCH
+
+ ## DEPTH FIRST SEARCH #################################################
 #  visited_states = Hash.new
 #  stack = Array.new
 #  stack << new_game
