@@ -6,13 +6,16 @@ require_relative 'utility'
 require 'pry'
 
 def astar_search(new_game)
-  puts "Executing A* search"
+  puts "------------------------Executing A* search--------------------"
+  start = Time.now
   num_Nodes_Expanded = 0
   fringe = PriorityQueue.new
   fringe << new_game
   while !fringe.empty?
     board = fringe.pop
     if board.isSolved
+      puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
+      puts "Time taken: " << (Time.now-start).to_s
       break
     end
     x_coord = board.index_zero.first
@@ -62,7 +65,8 @@ def astar_search(new_game)
 end
 
 def dfs(new_game)
-  puts "Executing depth first search"
+  puts "-----------------Executing depth first search--------------------"
+  start = Time.now
   num_Nodes_Expanded = 0
    visited_states = Hash.new
    stack = Array.new
@@ -70,6 +74,8 @@ def dfs(new_game)
    while !stack.empty?
      bo = stack.pop
      if bo.isSolved
+       puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
+       puts "Time taken: " << (Time.now-start).to_s
        break
      end
      # mark this permutation of the board as already visited
@@ -140,13 +146,16 @@ def dfs(new_game)
 end
 
 def bfs(new_game)
-  puts "Executing breadth first search"
+  puts "--------------Executing breadth first search ------------------------"
+  start = Time.now
   num_Nodes_Expanded = 0
   q = Queue.new
   q << new_game
   while (!q.empty?)
     bo = q.pop
     if bo.isSolved
+      puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
+      puts "Time taken: " << (Time.now-start).to_s
       break
     end
     x_coord = bo.index_zero.first
@@ -194,7 +203,7 @@ def bfs(new_game)
   end
 end
 
-new_game = State.new([[1,2,5],[3,4,0],[6,7,8]],[])
+new_game = State.new([[1,5,8],[4,2,7],[0,3,6]],[])
 astar_search(new_game)
 dfs(new_game)
 bfs(new_game)
