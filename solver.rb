@@ -12,6 +12,7 @@ def astar_search(new_game)
   fringe = PriorityQueue.new
   fringe << new_game
   while !fringe.empty?
+    puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
     board = fringe.pop
     if board.isSolved
       puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
@@ -178,7 +179,7 @@ def bfs(new_game)
     end
 
     # move right if possible
-    if y_coord != 2 && bo.get_history.last != "left"
+    if y_coord != bo.get_board.length-1 && bo.get_history.last != "left"
       copyb = copy_board(bo.get_board)
       copyh = copy_history(bo.get_history)
       state_copy = State.new(copyb, copyh)
@@ -196,7 +197,7 @@ def bfs(new_game)
     end
 
     # move down if possible
-    if x_coord != 2 && bo.get_history.last != "up"
+    if x_coord != bo.get_board.length-1 && bo.get_history.last != "up"
       copyb = copy_board(bo.get_board)
       copyh = copy_history(bo.get_history)
       state_copy = State.new(copyb, copyh)
@@ -206,7 +207,13 @@ def bfs(new_game)
   end
 end
 
-new_game = State.new([[1,5,8],[4,2,7],[0,3,6]],[])
+# new_game = State.new([[1,5,8],[4,2,7],[0,3,6]],[])
+# new_game = State.new([[1,5,2,3],[4,0,10,7],[9,6,14,11],[8,12,13,15]],[])
+new_game = State.new([[4,1,2,3],[5,9,6,7],[12,8,10,11],[0,13,14,15]],[])
+
+# new_game = State.new([[1,2,3,0],[4,5,6,7],[8,9,10,11],[12,13,14,15]],[])
+
+
 astar_search(new_game)
 # dfs(new_game)
 bfs(new_game)

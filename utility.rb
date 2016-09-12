@@ -6,7 +6,9 @@ def copy_board(b)
   newb = Array.new
   b.each do |row|
     r = Array.new
-    r << row[0] << row[1] << row[2]
+    row.each do |element|
+      r << element
+    end
     newb << r
   end
   newb

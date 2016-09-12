@@ -94,8 +94,8 @@ class State
 
   # returns the location of the blank tile
   def index_zero
-    for x in 0...3
-      for y in 0...3
+    for x in 0...@board.length
+      for y in 0...@board.length
         if @board[x][y] == 0
           return [x,y]
         end
@@ -208,9 +208,18 @@ class State
   # returns the h(n) part of the cost function
   # uses the Manhattan distance to approximate the number of moves needed to solve the puzzle
   def get_h
-    get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3) +
-    get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6) +
-    get_manhattan_distance(7) + get_manhattan_distance(8)
+    if @board.length == 3
+      return get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3) +
+      get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6) +
+      get_manhattan_distance(7) + get_manhattan_distance(8)
+    elsif @board.length == 4
+      return get_manhattan_distance(1) + get_manhattan_distance(2) + get_manhattan_distance(3) +
+      get_manhattan_distance(4) + get_manhattan_distance(5) + get_manhattan_distance(6) +
+      get_manhattan_distance(7) + get_manhattan_distance(8) +
+      get_manhattan_distance(9) + get_manhattan_distance(10) + get_manhattan_distance(11) +
+      get_manhattan_distance(12) + get_manhattan_distance(13) + get_manhattan_distance(14) +
+      get_manhattan_distance(15)
+    end    
   end
 
   # the f(n) or total cost of the current state
