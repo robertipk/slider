@@ -1,7 +1,52 @@
 # Robert Ip, CISC 3410, Program #1
 # https://github.com/robertipk/slider/
 class State
-  def initialize (board,history)
+
+# reads input from text file to initiate the slider puzzle
+  def read_file(file_name)
+    text = File.open(file_name).read
+    @board = make_board(text)
+
+  end
+
+  def make_board(text)
+    text_arr = text.split(" ")
+    new_board = Array.new
+    if text.length == 9
+      # make a 3 X 3 slider puzzle
+    3.times{
+        row = Array.new
+        3.times{
+          row << text.shift
+        }
+        new_board << row
+    }
+    elsif text.length == 16
+      # make a 4 X 4 slider puzzle
+    4.times{
+        row = Array.new
+        4.times{
+          row << text.shift
+        }
+        new_board << row
+    }
+    end
+    return new_board
+  end
+
+  # initialize a 4 x 4 slider puzzle
+  def initialize_4 (board,history)
+    # instance variables
+    @board = board
+    @history = history
+    @goal_state = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]]
+    @onex = @twox = @threey = @sixy = 0
+    @oney = @threex = @fourx = @foury = @fivex = @seveny = 1
+    @twoy = @fivey = @sevenx = @eightx = @sixx = @eighty = 2
+  end
+
+  # initialize a 3 x 3 slider puzzle
+  def initialize_3 (board,history)
     # instance variables
     @board = board
     @history = history
