@@ -26,6 +26,7 @@ class PriorityQueue
     bubble_up(@elements.size - 1)
   end
 
+  # implements min heap by comparing based on get_f (A* search)
   def bubble_up(index)
     parent_index = (index / 2)
 

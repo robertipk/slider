@@ -34,7 +34,7 @@ def astar_search(new_game)
     end
 
    # move right if possible and resulting state has not been visited yet
-    if y_coord != 2 && board.get_history.last != "left"
+    if y_coord != board.get_board.length-1 && board.get_history.last != "left"
       copyb = copy_board(board.get_board)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
@@ -54,7 +54,7 @@ def astar_search(new_game)
     end
 
     # move down if possible and resulting state has not been visited yet
-    if x_coord != 2 && board.get_history.last != "up"
+    if x_coord != board.get_board.length-1 && board.get_history.last != "up"
       # binding.pry
       copyb = copy_board(board.get_board)
       copyh = copy_history(board.get_history)
@@ -83,7 +83,6 @@ def dfs(new_game)
      break
     end
 
-
     # and push its adjacent nodes onto the stack
     if !visited_states.has_key?(bo.get_board)
       visited_states[bo.get_board] = true
@@ -108,7 +107,7 @@ def dfs(new_game)
       end
 
       # move right if possible and resulting state has not been visited yet
-       if y_coord != 2 && bo.get_history.last != "left"
+       if y_coord != bo.get_board.length-1 && bo.get_history.last != "left"
          copyb = copy_board(bo.get_board)
          copyh = copy_history(bo.get_history)
          state_copy = State.new(copyb, copyh)
@@ -134,7 +133,7 @@ def dfs(new_game)
        end
 
        # move down if possible and resulting state has not been visited yet
-       if x_coord != 2 && bo.get_history.last != "up"
+       if x_coord != bo.get_board.length-1 && bo.get_history.last != "up"
          copyb = copy_board(bo.get_board)
          copyh = copy_history(bo.get_history)
          state_copy = State.new(copyb, copyh)
@@ -207,13 +206,15 @@ def bfs(new_game)
   end
 end
 
-# new_game = State.new([[1,5,8],[4,2,7],[0,3,6]],[])
+new_game = State.new([[1,5,8],[4,2,7],[0,3,6]],[])
 # new_game = State.new([[1,5,2,3],[4,0,10,7],[9,6,14,11],[8,12,13,15]],[])
-new_game = State.new([[4,1,2,3],[5,9,6,7],[12,8,10,11],[0,13,14,15]],[])
+# new_game = State.new([[4,1,2,0],[5,9,6,3],[12,8,10,7],[13,14,15,11]],[])
+# new_game = State.new([[1,2,3,7],[8,4,5,6],[0,9,10,11],[12,13,14,15]],[])
+
 
 # new_game = State.new([[1,2,3,0],[4,5,6,7],[8,9,10,11],[12,13,14,15]],[])
 
 
-astar_search(new_game)
-# dfs(new_game)
-bfs(new_game)
+# astar_search(new_game)
+dfs(new_game)
+# bfs(new_game)

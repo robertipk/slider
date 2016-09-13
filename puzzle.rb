@@ -129,7 +129,7 @@ class State
 
   ## swaps the blank tile with the tile to its right
   def moveRight(x,y)
-   if y != @board.length
+   if y != @board.length-1
      @history << "right"
      @board[x][y],@board[x][y+1] = @board[x][y+1],@board[x][y]
    end
@@ -219,12 +219,12 @@ class State
       get_manhattan_distance(9) + get_manhattan_distance(10) + get_manhattan_distance(11) +
       get_manhattan_distance(12) + get_manhattan_distance(13) + get_manhattan_distance(14) +
       get_manhattan_distance(15)
-    end    
+    end
   end
 
   # the f(n) or total cost of the current state
   # calculated by retrieving g+h
   def get_f
-    get_g + get_h
+    get_g*15 + get_h
   end
 end
