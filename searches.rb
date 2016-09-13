@@ -9,12 +9,13 @@ require 'pry'
 def astar_search(new_game,fileName)
   outfile = File.open(fileName, "w")
   outfile.syswrite("-----------------Executing A* search--------------------\n")
+  outfile.syswrite("Initial board" << new_game.get_board.to_s << "\n")
+  outfile.syswrite("Time started: " << Time.now.to_s << "\n")
   start = Time.now
   num_Nodes_Expanded = 0
   fringe = PriorityQueue.new
   fringe << new_game
   while !fringe.empty?
-    puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
     board = fringe.pop
     if board.isSolved
       outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
@@ -70,43 +71,48 @@ def astar_search(new_game,fileName)
       num_Nodes_Expanded += 1
     end
   end
+  outfile.syswrite("Time finished: " << Time.now.to_s << "\n")
 end
 
 def dfs(new_game,fileName)
   outfile = File.open(fileName, "w")
   outfile.syswrite("-----------------Executing depth first search--------------------\n")
+  outfile.syswrite("Initial board" << new_game.get_board.to_s << "\n")
+  outfile.syswrite("Time started: " << Time.now.to_s << "\n")
   start = Time.now
   num_Nodes_Expanded = 0
   visited_states = Hash.new
   stack = Array.new
   stack << new_game
   while !stack.empty?
-    bo = stack.pop
-    visited_states[bo] = true
+    board = stack.pop
+    visited_states[board] = true
     num_Nodes_Expanded += 1
-    if bo.isSolved
-    #  out << "Number of nodes expanded: " << num_Nodes_Expanded.to_s
-    #  out << "Time taken: " << (Time.now-start).to_s
+    if board.isSolved
+     puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
+     puts "Time taken: " << (Time.now-start).to_s
      outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
      outfile.syswrite "Time taken: " << (Time.now-start).to_s << "\n"
-     bo.display_history
+     outfile.syswrite "Number of moves: " << board.get_history.length.to_s << "\n"
+     outfile.syswrite "Moves to take: " << board.get_history.to_s << "\n"
+     board.display_history
      break
     end
 
     # and push its adjacent nodes onto the stack
-    if !visited_states.has_key?(bo.get_board)
-      visited_states[bo.get_board] = true
+    if !visited_states.has_key?(board.get_board)
+      visited_states[board.get_board] = true
 
-      x_coord = bo.index_zero.first
-      y_coord = bo.index_zero[1]
+      x_coord = board.index_zero.first
+      y_coord = board.index_zero[1]
 
       # expand the node and add the new nodes to the queue
       # as long as they're not in the frontier and haven't yet been visited
 
       # move left if possible and resulting state has not been visited yet
-      if y_coord != 0 && bo.get_history.last != "right"
-        copyb = copy_board(bo.get_board)
-        copyh = copy_history(bo.get_history)
+      if y_coord != 0 && board.get_history.last != "right"
+        copyb = copy_board(board.get_board)
+        copyh = copy_history(board.get_history)
         state_copy = State.new(copyb, copyh)
         state_copy.moveLeft(x_coord,y_coord)
         key = state_copy.get_board
@@ -117,9 +123,9 @@ def dfs(new_game,fileName)
       end
 
       # move right if possible and resulting state has not been visited yet
-       if y_coord != bo.get_board.length-1 && bo.get_history.last != "left"
-         copyb = copy_board(bo.get_board)
-         copyh = copy_history(bo.get_history)
+       if y_coord != board.get_board.length-1 && board.get_history.last != "left"
+         copyb = copy_board(board.get_board)
+         copyh = copy_history(board.get_history)
          state_copy = State.new(copyb, copyh)
          state_copy.moveRight(x_coord,y_coord)
          key = state_copy.get_board
@@ -130,9 +136,9 @@ def dfs(new_game,fileName)
        end
 
        # move up if possible and resulting state has not been visited yet
-       if x_coord != 0 && bo.get_history.last != "down"
-         copyb = copy_board(bo.get_board)
-         copyh = copy_history(bo.get_history)
+       if x_coord != 0 && board.get_history.last != "down"
+         copyb = copy_board(board.get_board)
+         copyh = copy_history(board.get_history)
          state_copy = State.new(copyb, copyh)
          state_copy.moveUp(x_coord,y_coord)
          key = state_copy.get_board
@@ -143,9 +149,9 @@ def dfs(new_game,fileName)
        end
 
        # move down if possible and resulting state has not been visited yet
-       if x_coord != bo.get_board.length-1 && bo.get_history.last != "up"
-         copyb = copy_board(bo.get_board)
-         copyh = copy_history(bo.get_history)
+       if x_coord != board.get_board.length-1 && board.get_history.last != "up"
+         copyb = copy_board(board.get_board)
+         copyh = copy_history(board.get_history)
          state_copy = State.new(copyb, copyh)
          state_copy.moveDown(x_coord,y_coord)
          key = state_copy.get_board
@@ -156,65 +162,71 @@ def dfs(new_game,fileName)
        end
      end
   end
+  outfile.syswrite("Time finished: " << Time.now.to_s << "\n")
 end
 
 def bfs(new_game,fileName)
   outfile = File.open(fileName, "w")
   outfile.syswrite("-----------------Executing breadth first search--------------------\n")
+  outfile.syswrite("Time started: " << Time.now.to_s << "\n")
+  outfile.syswrite("Initial board" << new_game.get_board.to_s << "\n")
   start = Time.now
   num_Nodes_Expanded = 0
   q = Queue.new
   q << new_game
   while (!q.empty?)
-    bo = q.pop
+    board = q.pop
     num_Nodes_Expanded += 1
-    if bo.isSolved
-      outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
-      outfile.syswrite "Time taken: " << (Time.now-start).to_s << "\n"
+    if board.isSolved
       puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
       puts "Time taken: " << (Time.now-start).to_s
-      bo.display_history
+      outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
+      outfile.syswrite "Time taken: " << (Time.now-start).to_s << "\n"
+      outfile.syswrite "Number of moves: " << board.get_history.length.to_s << "\n"
+      outfile.syswrite "Moves to take: " << board.get_history.to_s << "\n"
+      board.display_history
       break
     end
-    x_coord = bo.index_zero.first
-    y_coord = bo.index_zero[1]
+    x_coord = board.index_zero.first
+    y_coord = board.index_zero[1]
 
     # expand the node and add the new nodes to the queue
 
     # move left if possible
-    if y_coord != 0 && bo.get_history.last != "right"
-      copyb = copy_board(bo.get_board)
-      copyh = copy_history(bo.get_history)
+    if y_coord != 0 && board.get_history.last != "right"
+      copyb = copy_board(board.get_board)
+      copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveLeft(x_coord,y_coord)
       q.push(state_copy)
     end
 
     # move right if possible
-    if y_coord != bo.get_board.length-1 && bo.get_history.last != "left"
-      copyb = copy_board(bo.get_board)
-      copyh = copy_history(bo.get_history)
+    if y_coord != board.get_board.length-1 && board.get_history.last != "left"
+      copyb = copy_board(board.get_board)
+      copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveRight(x_coord,y_coord)
       q.push(state_copy)
     end
 
     # move up if possible
-    if x_coord != 0 && bo.get_history.last != "down"
-      copyb = copy_board(bo.get_board)
-      copyh = copy_history(bo.get_history)
+    if x_coord != 0 && board.get_history.last != "down"
+      copyb = copy_board(board.get_board)
+      copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveUp(x_coord,y_coord)
       q.push(state_copy)
     end
 
     # move down if possible
-    if x_coord != bo.get_board.length-1 && bo.get_history.last != "up"
-      copyb = copy_board(bo.get_board)
-      copyh = copy_history(bo.get_history)
+    if x_coord != board.get_board.length-1 && board.get_history.last != "up"
+      copyb = copy_board(board.get_board)
+      copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveDown(x_coord,y_coord)
       q.push(state_copy)
     end
   end
+  outfile.syswrite("Time finished: " << Time.now.to_s << "\n")
 end
