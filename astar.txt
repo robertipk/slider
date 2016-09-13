@@ -1,0 +1,5 @@
+-----------------Executing A* search--------------------
+Number of nodes expanded: 10
+Time taken: 0.003604
+Number of moves6
+Moves to take: ["down", "down", "left", "left", "up", "up"]

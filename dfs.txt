@@ -1,0 +1,3 @@
+-----------------Executing depth first search--------------------
+Number of nodes expanded: 1231
+Time taken: 0.12184

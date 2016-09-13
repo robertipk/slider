@@ -5,8 +5,10 @@ require_relative 'priorityq'
 require_relative 'utility'
 require 'pry'
 
-def astar_search(new_game)
-  puts "------------------------Executing A* search--------------------"
+# My implementations of A* search, IDA*, DFS, BFS
+def astar_search(new_game,fileName)
+  outfile = File.open(fileName, "w")
+  outfile.syswrite("-----------------Executing A* search--------------------\n")
   start = Time.now
   num_Nodes_Expanded = 0
   fringe = PriorityQueue.new
@@ -15,6 +17,10 @@ def astar_search(new_game)
     puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
     board = fringe.pop
     if board.isSolved
+      outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
+      outfile.syswrite "Time taken: " << (Time.now-start).to_s << "\n"
+      outfile.syswrite "Number of moves: " << board.get_history.length.to_s << "\n"
+      outfile.syswrite "Moves to take: " << board.get_history.to_s << "\n"
       puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
       puts "Time taken: " << (Time.now-start).to_s
       board.display_history
@@ -66,8 +72,9 @@ def astar_search(new_game)
   end
 end
 
-def dfs(new_game)
-  puts "-----------------Executing depth first search--------------------"
+def dfs(new_game,fileName)
+  outfile = File.open(fileName, "w")
+  outfile.syswrite("-----------------Executing depth first search--------------------\n")
   start = Time.now
   num_Nodes_Expanded = 0
   visited_states = Hash.new
@@ -75,10 +82,13 @@ def dfs(new_game)
   stack << new_game
   while !stack.empty?
     bo = stack.pop
+    visited_states[bo] = true
     num_Nodes_Expanded += 1
     if bo.isSolved
-     puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
-     puts "Time taken: " << (Time.now-start).to_s
+    #  out << "Number of nodes expanded: " << num_Nodes_Expanded.to_s
+    #  out << "Time taken: " << (Time.now-start).to_s
+     outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
+     outfile.syswrite "Time taken: " << (Time.now-start).to_s << "\n"
      bo.display_history
      break
     end
@@ -148,8 +158,9 @@ def dfs(new_game)
   end
 end
 
-def bfs(new_game)
-  puts "--------------Executing breadth first search ------------------------"
+def bfs(new_game,fileName)
+  outfile = File.open(fileName, "w")
+  outfile.syswrite("-----------------Executing breadth first search--------------------\n")
   start = Time.now
   num_Nodes_Expanded = 0
   q = Queue.new
@@ -158,6 +169,8 @@ def bfs(new_game)
     bo = q.pop
     num_Nodes_Expanded += 1
     if bo.isSolved
+      outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
+      outfile.syswrite "Time taken: " << (Time.now-start).to_s << "\n"
       puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
       puts "Time taken: " << (Time.now-start).to_s
       bo.display_history

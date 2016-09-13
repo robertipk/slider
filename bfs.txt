@@ -1,0 +1,3 @@
+-----------------Executing breadth first search--------------------
+Number of nodes expanded: 85
+Time taken: 0.002002

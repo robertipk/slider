@@ -225,6 +225,6 @@ class State
   # the f(n) or total cost of the current state
   # calculated by retrieving g+h
   def get_f
-    get_g*15 + get_h
+    get_g + get_h
   end
 end
