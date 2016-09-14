@@ -6,6 +6,7 @@ require_relative 'utility'
 
 time = Time.now.strftime('%Y-%m-%d_%H-%M-%S')
 # create filenames for the output files
+IDA_filename = "IDA_" + time + ".txt"
 astar_filename = "astar_" + time + ".txt"
 bfs_filename = "bfs_" + time + ".txt"
 dfs_filename = "dfs_" + time + ".txt"
@@ -16,6 +17,7 @@ input = File.read("puzzle.txt")
 initial_board = make_board(input)
 new_game = State.new(initial_board,[])
 
+IDA(new_game,IDA_filename)
 astar_search(new_game,astar_filename)
 bfs(new_game,bfs_filename)
 dfs(new_game,dfs_filename)

@@ -53,7 +53,7 @@ end
 
 # prints number of nodes expanded
 def print_num_expanded(num_nodes_expanded)
-  if num_nodes_expanded%500 == 0
+  if num_nodes_expanded%500 == 0 && num_nodes_expanded > 0
     puts "Number of nodes expanded: " << num_nodes_expanded.to_s
   end
 end

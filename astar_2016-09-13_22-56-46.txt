@@ -1,0 +1,8 @@
+-----------------Executing A* search--------------------
+Initial board[[1, 2, 5], [6, 3, 4], [7, 8, 0]]
+Time started: 2016-09-13 22:56:46 -0400
+Number of nodes expanded: 15
+Time taken: 0.003164
+Number of moves: 8
+Moves to take: ["left", "left", "up", "right", "right", "up", "left", "left"]
+Time finished: 2016-09-13 22:56:46 -0400
