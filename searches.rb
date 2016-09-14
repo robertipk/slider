@@ -3,7 +3,6 @@
 require_relative 'puzzle'
 require_relative 'priorityq'
 require_relative 'utility'
-require 'pry'
 
 # My implementations of A* search, IDA*, DFS, BFS
 def astar_search(new_game,fileName)
