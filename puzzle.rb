@@ -1,38 +1,6 @@
 # Robert Ip, CISC 3410, Program #1
 # https://github.com/robertipk/slider/
 class State
-
-# reads input from text file to initiate the slider puzzle
-  def read_file(file_name)
-    text = File.open(file_name).read
-    @board = make_board(text)
-  end
-
-  def make_board(text)
-    text_arr = text.split(" ")
-    new_board = Array.new
-    if text.length == 9
-      # make a 3 X 3 slider puzzle
-    3.times{
-        row = Array.new
-        3.times{
-          row << text.shift
-        }
-        new_board << row
-    }
-    elsif text.length == 16
-      # make a 4 X 4 slider puzzle
-    4.times{
-        row = Array.new
-        4.times{
-          row << text.shift
-        }
-        new_board << row
-    }
-    end
-    return new_board
-  end
-
   def initialize(board,history)
     if board.length == 3
       return initialize_3(board,history)
@@ -96,7 +64,8 @@ class State
   def index_zero
     for x in 0...@board.length
       for y in 0...@board.length
-        if @board[x][y] == 0
+        if @board[x][y].to_i == 0
+          a = [x,y]
           return [x,y]
         end
       end

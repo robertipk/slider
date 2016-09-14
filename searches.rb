@@ -8,6 +8,7 @@ require 'pry'
 # My implementations of A* search, IDA*, DFS, BFS
 def astar_search(new_game,fileName)
   outfile = File.open(fileName, "w")
+  puts "-----------------Executing A* search--------------------"
   outfile.syswrite("-----------------Executing A* search--------------------\n")
   outfile.syswrite("Initial board" << new_game.get_board.to_s << "\n")
   outfile.syswrite("Time started: " << Time.now.to_s << "\n")
@@ -16,6 +17,7 @@ def astar_search(new_game,fileName)
   fringe = PriorityQueue.new
   fringe << new_game
   while !fringe.empty?
+    print_num_expanded(num_Nodes_Expanded)
     board = fringe.pop
     if board.isSolved
       outfile.syswrite "Number of nodes expanded: " << num_Nodes_Expanded.to_s << "\n"
@@ -27,7 +29,7 @@ def astar_search(new_game,fileName)
       board.display_history
       break
     end
-    x_coord = board.index_zero.first
+    x_coord = board.index_zero[0]
     y_coord = board.index_zero[1]
 
     # move left if possible and resulting state has not been visited yet
@@ -76,15 +78,16 @@ end
 
 def dfs(new_game,fileName)
   outfile = File.open(fileName, "w")
+  puts "-----------------Executing Depth First Search--------------------"
   outfile.syswrite("-----------------Executing depth first search--------------------\n")
   outfile.syswrite("Initial board" << new_game.get_board.to_s << "\n")
   outfile.syswrite("Time started: " << Time.now.to_s << "\n")
   start = Time.now
   num_Nodes_Expanded = 0
   visited_states = Hash.new
-  stack = Array.new
-  stack << new_game
+  stack = [new_game]
   while !stack.empty?
+    print_num_expanded(num_Nodes_Expanded)
     board = stack.pop
     visited_states[board] = true
     num_Nodes_Expanded += 1
@@ -167,6 +170,7 @@ end
 
 def bfs(new_game,fileName)
   outfile = File.open(fileName, "w")
+  puts "-----------------Executing Breadth First search--------------------"
   outfile.syswrite("-----------------Executing breadth first search--------------------\n")
   outfile.syswrite("Time started: " << Time.now.to_s << "\n")
   outfile.syswrite("Initial board" << new_game.get_board.to_s << "\n")
@@ -174,9 +178,12 @@ def bfs(new_game,fileName)
   num_Nodes_Expanded = 0
   q = Queue.new
   q << new_game
+  visited_states = Hash.new
   while (!q.empty?)
     board = q.pop
+    visited_states[board] = true
     num_Nodes_Expanded += 1
+    print_num_expanded(num_Nodes_Expanded)
     if board.isSolved
       puts "Number of nodes expanded: " << num_Nodes_Expanded.to_s
       puts "Time taken: " << (Time.now-start).to_s
@@ -198,7 +205,10 @@ def bfs(new_game,fileName)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveLeft(x_coord,y_coord)
-      q.push(state_copy)
+      if !visited_states.has_key?(state_copy.get_board)
+        visited_states[:key] = true
+        q.push(state_copy)
+      end
     end
 
     # move right if possible
@@ -207,7 +217,10 @@ def bfs(new_game,fileName)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveRight(x_coord,y_coord)
-      q.push(state_copy)
+      if !visited_states.has_key?(state_copy.get_board)
+        visited_states[:key] = true
+        q.push(state_copy)
+      end
     end
 
     # move up if possible
@@ -216,7 +229,10 @@ def bfs(new_game,fileName)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveUp(x_coord,y_coord)
-      q.push(state_copy)
+      if !visited_states.has_key?(state_copy.get_board)
+        visited_states[:key] = true
+        q.push(state_copy)
+      end
     end
 
     # move down if possible
@@ -225,7 +241,10 @@ def bfs(new_game,fileName)
       copyh = copy_history(board.get_history)
       state_copy = State.new(copyb, copyh)
       state_copy.moveDown(x_coord,y_coord)
-      q.push(state_copy)
+      if !visited_states.has_key?(state_copy.get_board)
+        visited_states[:key] = true
+        q.push(state_copy)
+      end
     end
   end
   outfile.syswrite("Time finished: " << Time.now.to_s << "\n")
