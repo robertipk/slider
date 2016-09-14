@@ -1,4 +1,0 @@
------------------Executing depth first search--------------------
-Initial board[[1, 2, 5], [6, 3, 4], [7, 8, 0]]
-Time started: 2016-09-13 22:54:37 -0400
-Time finished: 2016-09-13 22:54:37 -0400
